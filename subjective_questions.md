@@ -7,34 +7,33 @@
       - [Assess the accuracy of the model](#assess-the-accuracy-of-the-model-1)
     - [Assumption for the linear regression](#assumption-for-the-linear-regression)
 - [2. What are the assumptions of linear regression regarding residuals?](#2-what-are-the-assumptions-of-linear-regression-regarding-residuals)
-    - [The regression model is linear in parameters](#the-regression-model-is-linear-in-parameters)
+    - [**The regression model is linear in parameters**](#the-regression-model-is-linear-in-parameters)
       - [Check](#check)
-    - [No autocorrelation of residuals](#no-autocorrelation-of-residuals)
+    - [**No autocorrelation of residuals**](#no-autocorrelation-of-residuals)
       - [Check](#check-1)
-    - [No perfect multicollinearity](#no-perfect-multicollinearity)
+    - [**No perfect multicollinearity**](#no-perfect-multicollinearity)
       - [Check](#check-2)
-    - [Homoscedasticity of residuals or equal variance](#homoscedasticity-of-residuals-or-equal-variance)
+    - [**Homoscedasticity of residuals or equal variance**](#homoscedasticity-of-residuals-or-equal-variance)
       - [Check](#check-3)
-    - [The error terms must be normally distributed](#the-error-terms-must-be-normally-distributed)
+    - [**The error terms must be normally distributed**](#the-error-terms-must-be-normally-distributed)
       - [Check](#check-4)
-    - [The number of observations must be greater than number of Xs](#the-number-of-observations-must-be-greater-than-number-of-xs)
+    - [**The number of observations must be greater than number of Xs**](#the-number-of-observations-must-be-greater-than-number-of-xs)
 - [3. What is the coefficient of correlation and the coefficient of determination?](#3-what-is-the-coefficient-of-correlation-and-the-coefficient-of-determination)
-    - [Coefficient of correlation](#coefficient-of-correlation)
-    - [Coefficient of determination](#coefficient-of-determination)
+    - [**Coefficient of correlation**](#coefficient-of-correlation)
+    - [**Coefficient of determination**](#coefficient-of-determination)
 - [4. Explain the Anscombe’s quartet in detail.](#4-explain-the-anscombes-quartet-in-detail)
 - [5. What is Pearson’s R?](#5-what-is-pearsons-r)
 - [6. What is scaling? Why is scaling performed? What is the difference between normalized scaling and standardized scaling?](#6-what-is-scaling-why-is-scaling-performed-what-is-the-difference-between-normalized-scaling-and-standardized-scaling)
-    - [What is scaling?](#what-is-scaling)
-    - [Why is scaling performed?](#why-is-scaling-performed)
-    - [What is the difference between normalized scaling and standardized scaling?](#what-is-the-difference-between-normalized-scaling-and-standardized-scaling)
-      - [Normalized scaling](#normalized-scaling)
-      - [Standardized scaling](#standardized-scaling)
-      - [Difference](#difference)
+    - [**What is scaling?**](#what-is-scaling)
+    - [**Why is scaling performed?**](#why-is-scaling-performed)
+    - [**What is the difference between normalized scaling and standardized scaling?**](#what-is-the-difference-between-normalized-scaling-and-standardized-scaling)
+      - [**Normalized scaling**](#normalized-scaling)
+      - [**Standardized scaling**](#standardized-scaling)
+      - [**Difference**](#difference)
 - [7. You might have observed that sometimes the value of VIF is infinite. Why does this happen?](#7-you-might-have-observed-that-sometimes-the-value-of-vif-is-infinite-why-does-this-happen)
 - [8. What is the Gauss-Markov theorem?](#8-what-is-the-gauss-markov-theorem)
 - [9. Explain the gradient descent algorithm in detail.](#9-explain-the-gradient-descent-algorithm-in-detail)
 - [10. What is a Q-Q plot? Explain the use and importance of a Q-Q plot in linear regression.](#10-what-is-a-q-q-plot-explain-the-use-and-importance-of-a-q-q-plot-in-linear-regression)
-
 
 # 1. Explain the linear regression algorithm in detail.
 
@@ -44,10 +43,9 @@ Linear regression is a subcategory of supervised and aims to predict outputs on 
 
 In simple (univariate) linear regression is to model the relationship between a single feature (independent variable X) and a continuous valued response (target/dependent variable y). The equation of a linear model with one explanatory variable is defined as follows:
 
-![line](images/simple_lr.png)
+>>**y = β<sub>0</sub> + β<sub>1</sub> * X**
 
-
-Here, the b0 represents the y-axis intercept and b1 is the weight coefficient of the independent variable.
+Here, the β<sub>0</sub> represents the y-axis intercept and β<sub>1</sub> is the weight coefficient of the independent variable.
 
 Based on the linear equation that we defined previously, linear regression can be understood as finding the best-fitting straight line through the sample points, as shown in the following figure:
 
@@ -55,24 +53,19 @@ Based on the linear equation that we defined previously, linear regression can b
 
 This best-fitting line is also called the regression line, and the vertical lines from the regression line to the sample points are the so-called offsets or residuals: the errors of the prediction.
 
-To find the parameters, we need to minimize the least squares or the sum of squared errors. Of course, the linear model is not perfect and it will not predict all the data accurately, meaning that there is a difference between the actual value and the prediction. The error is easily calculated with:
+To find the parameters, we need to minimize the least squares or the sum of squared errors. The linear model is not perfect and it will not predict all the data accurately, meaning that there is a difference between the actual value and the prediction. The error is easily calculated with:
 
-![line](images/error_lr.png)
-
+>>**e<sub>i</sub> = y<sub>i</sub> - ŷ<sub>i</sub>**
 
 We square the error, because the prediction can be either above or below the true value, resulting in a negative or positive difference respectively. If we did not square the errors, the sum of errors could decrease because of negative differences and not because the model is a good fit. Also, squaring the errors penalizes large differences, and so the minimizing the squared errors **guarantee** a better model.
 
 #### Estimate the relevancy of the coefficients
 
-Once we have the coefficients but to check if they are relevant or not, we find the p-value of these coefficients.
+Once we have the coefficients but to check if they are relevant or not, we find the p-value of these coefficients. The p-value is used to quantify statistical significance; it allows to tell whether the null hypothesis is to be rejected or not.
 
-The p-value is used to quantify statistical significance; it allows to tell whether the null hypothesis is to be rejected or not.
+**Null hypothesis**
 
-The null hypothesis?
-
-For any modelling task, the hypothesis is that there is some correlation between the features and the target. The null hypothesis is therefore the opposite: there is no correlation between the features and the target.
-
-So, finding the p-value for each coefficient will tell if the variable is statistically significant to predict the target. As a general rule of thumb, if the p-value is less than 0.05: there is a strong relationship between the variable and the target.
+For any modelling task, the hypothesis is that there is some correlation between the features and the target. The null hypothesis is therefore the opposite: there is no correlation between the features and the target. So, finding the p-value for each coefficient will tell if the variable is statistically significant to predict the target. As a general rule of thumb, if the p-value is less than **0.05**: there is a strong relationship between the variable and the target.
 
 #### Assess the accuracy of the model
 
@@ -82,22 +75,20 @@ To assess that, we usually use the **Root Mean Squared Error** and the R² stati
 
 The first error metric is simple to understand: the lower the residual errors, the better the model fits the data (in this case, the closer the data is to a linear relationship).
 
-As for the R² metric, it measures the proportion of variability in the target that can be explained using a feature X. Therefore, assuming a linear relationship, if feature X can explain (predict) the target, then the proportion is high and the R² value will be close to 1. If the opposite is true, the R² value is then closer to 0.
+As for the **R²** metric, it measures the proportion of variability in the target that can be explained using a feature X. Therefore, assuming a linear relationship, if feature X can explain (predict) the target, then the proportion is high and the R² value will be close to 1. If the opposite is true, the R² value is then closer to 0.
 
 ### Multiple linear regression
 
 The special case of linear regression with one explanatory variable described above is also called simple linear regression. We can generalize the linear regression model to multiple explanatory variables; this process is called multiple linear regression:
 
-![line](images/multiple_lr.png)
+>>**y = β<sub>0</sub> + β<sub>1</sub> * X<sub>1</sub> +  β<sub>2</sub> * X<sub>2</sub>+  β<sub>3</sub> * X<sub>3</sub> + .... +  β<sub>p</sub> * X<sub>p</sub>**
 
 
 #### Assess the relevancy of a predictor
 
 Previously, in simple linear regression, we assess the relevancy of a feature by finding its p-value.
 
-In the case of multiple linear regression, we use another metric: the F-statistic.
-
-Here, the F-statistic is calculated for the overall model, whereas the p-value is specific to each predictor. If there is a strong relationship, then F will be much larger than 1. Otherwise, it will be approximately equal to 1.
+In the case of multiple linear regression, we use another metric: the **F-statistic**. Here, the F-statistic is calculated for the overall model, whereas the p-value is specific to each predictor. If there is a strong relationship, then F will be much larger than 1. Otherwise, it will be approximately equal to 1.
 
 #### Assess the accuracy of the model
 
@@ -113,29 +104,31 @@ The regression has five key assumptions:
 4. ***No auto-correlation:*** The linear regression analysis requires that there is little or no autocorrelation in the data.  Autocorrelation occurs when the residuals are not independent from each other.
 5. ***Homoscedasticity:*** This means that the residuals are equal across the regression line.
 
-We will explain about these assumptions in more in the next question.
+*We will explain about these assumptions in more details in the next question.*
 
 # 2. What are the assumptions of linear regression regarding residuals?
 
-### The regression model is linear in parameters
+### **The regression model is linear in parameters**
 The dependent variable Y has a roughly linear relationship with the independents variable X. In the following equation
 
-![line](images/lr_1.png)
+>>**y = β<sub>0</sub> + β<sub>1</sub> * X<sub>1</sub> + β<sub>2</sub> * X<sup>2</sup><sub>2</sub>**
 
-X2 is raised to power 2, the equation is still linear in parameters.
+
+X<sub>2</sub> is raised to power 2, the equation is still linear in parameters.
 
 #### Check
 Scatter plots can be used to check the relation of the dependent variable with the independent variables.
 
-### No autocorrelation of residuals
+### **No autocorrelation of residuals**
 
 The presence of correlation in error terms drastically reduces model’s accuracy. This usually occurs in time series models where the next instant is dependent on previous instant. If the error terms are correlated, the estimated standard errors tend to underestimate the true standard error.
 
 If this happens, it causes confidence intervals and prediction intervals to be narrower. Narrower confidence interval means that a 95% confidence interval would have lesser probability than 0.95 that it would contain the actual value of coefficients.
+
 #### Check
 Durbin – Watson (DW) statistic. It must lie between 0 and 4. If DW = 2, implies no autocorrelation, 0 < DW < 2 implies positive autocorrelation while 2 < DW < 4 indicates negative autocorrelation
 
-### No perfect multicollinearity
+### **No perfect multicollinearity**
 This phenomenon exists when the independent variables are found to be moderately or highly correlated. In a model with correlated variables, it becomes a tough task to figure out the true relationship of a predictors with response variable. In other words, it becomes difficult to find out which variable is actually contributing to predict the response variable.
 
 #### Check
@@ -144,7 +137,7 @@ This phenomenon exists when the independent variables are found to be moderately
 
 2. Variance Inflation factor (VIF): VIF is a metric computed for every X variable that goes into a linear model. If the VIF of a variable is high, it means the information in that variable is already explained by other X variables present in the given model, which means, more redundant is that variable.
 
-### Homoscedasticity of residuals or equal variance
+### **Homoscedasticity of residuals or equal variance**
 
 If the variance is not constant across the error terms, then there is a case of heteroscedasticity. These non-constant variance across the error terms are due to the presence of outliers in the original data. These outliers influence the model to a huge extent.
 
@@ -153,7 +146,7 @@ If the variance is not constant across the error terms, then there is a case of 
 1. We can look at residual vs fitted values plot. If heteroskedasticity exists, the plot would exhibit a funnel shape pattern (shown in next section).
 2. We can use Breusch-Pagan / Cook – Weisberg test or White general test to detect this phenomenon.
 
-### The error terms must be normally distributed
+### **The error terms must be normally distributed**
 
 If the error terms are non- normally distributed, confidence intervals may become too wide or narrow. Once confidence interval becomes unstable, it leads to difficulty in estimating coefficients based on minimization of least squares. Presence of non – normal distribution suggests that there are a few unusual data points which must be studied closely to make a better model.
 
@@ -162,19 +155,18 @@ If the error terms are non- normally distributed, confidence intervals may becom
 1. We can draw QQ plot
 2. We can also perform statistical tests of normality such as Kolmogorov-Smirnov test, Shapiro-Wilk test.
 
-### The number of observations must be greater than number of Xs
+### **The number of observations must be greater than number of Xs**
 
 As part of regression analysis, the data set should contain at least 20 examples for each independent variable. Most importantly, the number of data points we have in the data set should be more than the number of independent variables.
 
-
 # 3. What is the coefficient of correlation and the coefficient of determination?
 
-### Coefficient of correlation
+### **Coefficient of correlation**
 
 The quantity **R**, called the linear correlation coefficient, measures the strength and the direction of a linear relationship between two variables. The linear correlation
 coefficient is sometimes referred to as the Pearson product moment correlation coefficient in honor of its developer Karl Pearson.
 
-The value of r is such that -1 < **R** < +1.  The + and – signs are used for positive linear correlations and negative linear correlations, respectively.
+The value of **R** is such that -1 < **R** < +1.  The + and – signs are used for positive linear correlations and negative linear correlations, respectively.
 
 1. **Positive correlation:** If x and y have a strong positive linear correlation, **R** is close to +1.  An **R** value of exactly +1 indicates a perfect positive fit. Positive values
 indicate a relationship between x and y variables such that as values for x increases,
@@ -185,35 +177,30 @@ indicate a relationship between x and y such that as values for x increase, valu
    
 3. **No correlation:**  If there is no linear correlation or a weak linear correlation, **R** is close to 0.  A value near zero means that there is a random, nonlinear relationship between the two variables
 
-Note that **R** is a dimensionless quantity; that is, it does not depend on the units employed.
+**R** is a dimensionless quantity; that is, it does not depend on the units employed.
    
 Perfect correlation of ± 1 occurs only when the data points all lie exactly on a
 straight line.  If **R** = +1, the slope of this line is positive.  If **R** = -1, the slope of this
 line is negative.
      
-A correlation greater than 0.8 is generally described as strong, whereas a correlation
+***A correlation greater than 0.8 is generally described as strong, whereas a correlation
 less than 0.5 is generally described as weak.  These values can vary based upon the
-"type" of data being examined.
+"type" of data being examined.***
 
-### Coefficient of determination
+### **Coefficient of determination**
 
 The coefficient of determination, **R<sup>2</sup>**, is useful because it gives the proportion of the variance (fluctuation) of one variable that is predictable from the other variable.
 
-It is a measure that allows us to determine how certain one can be in making
-predictions from a certain model/graph.
+It is a measure that allows us to determine how certain one can be in making predictions from a certain model/graph.
 
-The coefficient of determination is the ratio of the explained variation to the total
-variation.
+The coefficient of determination is the ratio of the explained variation to the total variation.
 
 The coefficient of determination is such that 0 <  **R<sup>2</sup>** < 1,  and denotes the strength of the linear association between x and y. 
 
-The coefficient of determination represents the percent of the data that is the closest
-to the line of best fit.  For example, if **R** = 0.922, then **R<sup>2</sup>** = 0.850, which means that 85% of the total variation in y can be explained by the linear relationship between x and y (as described by the regression equation).  The other 15% of the total variation in y remains unexplained.
+The coefficient of determination represents the percent of the data that is the closest to the line of best fit.  For example, if **R** = 0.922, then **R<sup>2</sup>** = 0.850, which means that 85% of the total variation in y can be explained by the linear relationship between x and y (as described by the regression equation).  The other 15% of the total variation in y remains unexplained.
 
-The coefficient of determination is a measure of how well the regression line
-represents the data.  If the regression line passes exactly through every point on the
-scatter plot, it would be able to explain all of the variation. The further the line is
-away from the points, the less it is able to explain.
+***The coefficient of determination is a measure of how well the regression line represents the data.  If the regression line passes exactly through every point on the scatter plot, it would be able to explain all of the variation. The further the line is
+away from the points, the less it is able to explain.***
 
 # 4. Explain the Anscombe’s quartet in detail.
 
@@ -258,11 +245,11 @@ The symbol for Pearson's correlation is "ρ" when it is measured in the populati
 
 # 6. What is scaling? Why is scaling performed? What is the difference between normalized scaling and standardized scaling?
 
-### What is scaling?
+### **What is scaling?**
 
 It is a step of Data Pre Processing which is applied to independent variables or features of data. It basically helps to normalize the data within a particular range. In this we transform data so that it fits within a specific scale, like 0–100 or 0–1.
 
-### Why is scaling performed?
+### **Why is scaling performed?**
 
 1. Since the range of values of raw data varies widely, in some machine learning algorithms, objective functions will not work properly without normalization. For example, the majority of classifiers calculate the distance between two points by the distance. If one of  the features has a broad range of values, the distance will be governed  by this particular feature. Therefore, the range of all features should  be normalized so that each feature contributes approximately  proportionately to the final distance.
 
@@ -274,14 +261,12 @@ It is a step of Data Pre Processing which is applied to independent variables or
                   | B    | 45000      | 45  |
                   | C    | 60000      | 60  |
 
-
 Let us take a look at an example. The above table which lists the population and average age of people in the city. In algorithms, which calculates distance to learn will start giving more importance to *Population* after seeing it magnitude which will be incorrect.
 It order to avoid such scenarios we need to scale the data so that it fits within a range. 
 
-### What is the difference between normalized scaling and standardized scaling?
+### **What is the difference between normalized scaling and standardized scaling?**
 
-
-#### Normalized scaling
+#### **Normalized scaling**
 
 In this the data is scaled to a fixed range - usually 0 to 1.
 The cost of having this bounded range - in contrast to standardization - is that we will end up with smaller standard deviations, which can suppress the effect of outliers.
@@ -290,7 +275,7 @@ A Min-Max scaling is typically done via the following equation:
 
 ![line](images/min-max.png)
 
-#### Standardized scaling
+#### **Standardized scaling**
 
 In this, the features will be rescaled so that they’ll have the properties of a standard normal distribution with μ=0 and σ=1 where μ is the mean (average) and σ is the standard deviation from the mean; standard scores (also called z scores) of the samples are calculated as follows:
 
@@ -298,7 +283,7 @@ In this, the features will be rescaled so that they’ll have the properties of 
 
 Standardizing the features so that they are centered around 0 with a standard deviation of 1 is not only important if we are comparing measurements that have different units, but it is also a general requirement for many machine learning algorithms.
 
-#### Difference
+#### **Difference**
 
 1. The data range for Normalization is 0-1 while for the standardization it is 0+/- standard deviation of 1.
   
@@ -322,9 +307,7 @@ In this context, the definition of “best” refers to the minimum variance or 
 
 Assumptions:
 
-The regression model is: y = bX + e
-
-where:
+The regression model is: y = bX + e, where:
 
 1. y is an N X 1 vector of observations of the output variable (N is the sample size);
 
@@ -388,7 +371,6 @@ This size of steps taken to reach the minimum or bottom is called Learning Rate.
 Here is the formula of gradient descent algorithm:
 
 ![line](images/gd.png)
-
 
 ***Gradient Descent variants***
 
